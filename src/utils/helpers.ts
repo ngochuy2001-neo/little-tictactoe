@@ -23,8 +23,8 @@ export const checkWinner = (
     tempChecker_col.push(gameMap[i][colIndex]);
   }
 
-  const isXWinning = tempChecker_row.every((value, index) => value === WIN_CONDITION_X[index]);
-  const isOWinning = tempChecker_row.every((value, index) => value === WIN_CONDITION_O[index]);
+  const isXWinning = tempChecker_row.every((value, index) => value === WIN_CONDITION_X[index]) || tempChecker_col.every((value, index) => value === WIN_CONDITION_X[index]);
+  const isOWinning = tempChecker_row.every((value, index) => value === WIN_CONDITION_O[index]) || tempChecker_col.every((value, index) => value === WIN_CONDITION_O[index])
 
   if (isXWinning) {
     winStatus = {
@@ -41,7 +41,7 @@ export const checkWinner = (
     };
     return winStatus;
   }
-  console.log(tempChecker_col);
+  console.log(isXWinning);
   console.log(tempChecker_row);
   return winStatus;
 };

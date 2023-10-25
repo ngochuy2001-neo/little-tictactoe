@@ -33,6 +33,7 @@ export default function Home() {
 
   const handleReMatch = () => {
     setGameMap(DEFAULT_GAME_MAP);
+    setAlreadyWin(false);
   }
 
   const handleClick = (rowIndex: number, colIndex: number) => {
