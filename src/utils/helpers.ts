@@ -8,7 +8,7 @@ export const checkWinner = (
   const WIN_CONDITION_X = ["X", "X", "X"];
   const WIN_CONDITION_O = ["O", "O", "O"];
   let winStatus: IWinStatus = {
-    isWinning: false,
+    isMovable: false,
     winningSide: null,
   };
 
@@ -28,7 +28,7 @@ export const checkWinner = (
 
   if (isXWinning) {
     winStatus = {
-      isWinning: true,
+      isMovable: true,
       winningSide: "X",
     };
     return winStatus;
@@ -36,7 +36,7 @@ export const checkWinner = (
   console.log(isXWinning)
   if (isOWinning) {
     winStatus = {
-      isWinning: true,
+      isMovable: true,
       winningSide: "O",
     };
     return winStatus;
@@ -48,7 +48,7 @@ export const winnerChecker = (gameMap: string[][]) => {
   const WIN_CONDITION_O = ["O","O","O"];
   const WIN_CONDITION_X = ["X","X","X"];
   let winStatus: IWinStatus = {
-    isWinning: false,
+    isMovable: false,
     winningSide: null,
   };
   console.log(gameMap)
@@ -68,7 +68,7 @@ export const winnerChecker = (gameMap: string[][]) => {
     console.log(isXWinRow || isXWinCol);
     if(isXWinRow || isXWinCol){
       winStatus = {
-        isWinning: true,
+        isMovable: true,
         winningSide: "X"
       }
       return winStatus;
@@ -76,7 +76,7 @@ export const winnerChecker = (gameMap: string[][]) => {
 
     if(isOWinCol || isOWinRow){
       winStatus = {
-        isWinning: true,
+        isMovable: true,
         winningSide: "O",
       }
       return winStatus;
@@ -96,15 +96,23 @@ export const winnerChecker = (gameMap: string[][]) => {
   let isOWinCross = tempChecker_ltr.every((value, index) => value === WIN_CONDITION_O[index]) || tempChecker_rtl.every((value, index) => value === WIN_CONDITION_O[index])
   if(isXWinCross){
     winStatus = {
-      isWinning: true,
+      isMovable: true,
       winningSide: "X"
     }
     return winStatus;
   }
   if(isOWinCross){
     winStatus = {
-      isWinning: true,
+      isMovable: true,
       winningSide: "O",
+    }
+    return winStatus;
+  }
+  if(gameMap.every((value) => value.every((value) => value !== "U"))) {
+    winStatus = {
+      isMovable: true,
+      winningSide: "Drawn",
+      isDrawn: true,
     }
     return winStatus;
   }

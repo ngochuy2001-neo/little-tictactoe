@@ -1,4 +1,5 @@
 export interface IWinStatus {
-    isWinning: boolean | null,
+    isMovable: boolean | null,
     winningSide: string | null,
+    isDrawn?: boolean
 }

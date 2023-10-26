@@ -10,13 +10,17 @@ export default function Home() {
   const [gameMap, setGameMap] = useState<string[][]>(DEFAULT_GAME_MAP);
   const [turn, setTurn] = useState<boolean>(false);
   const [alreadyWin, setAlreadyWin] = useState<boolean>(false);
+  const [isDrawn, setIsDrawn] = useState<boolean>(false);
 
   useEffect(() => {
     let winnerFound = false;
     console.log(winnerChecker(gameMap));
     const winner: IWinStatus = winnerChecker(gameMap);
-    if (winner.isWinning) {
+    if (winner.isMovable) {
       setAlreadyWin(true);
+    }
+    if(winner.isDrawn){
+      setIsDrawn(true);
     }
   }, [gameMap]);
 
@@ -24,6 +28,7 @@ export default function Home() {
     setGameMap(DEFAULT_GAME_MAP);
     setAlreadyWin(false);
     setTurn(false);
+    setIsDrawn(false);
   }
 
   const handleClick = (rowIndex: number, colIndex: number) => {
@@ -60,7 +65,8 @@ export default function Home() {
           ))}
         </div>
         <div className="h-[50px] flex justify-center items-center text-xl w-[500px] border-2 border-black mt-3 bg-white">
-        {alreadyWin? `${turn? "X": "O"} is the winner`: ""}
+        {alreadyWin && !isDrawn? `${turn? "X": "O"} is the winner`: ""}
+        {isDrawn? "Game drawn" : ""}
         </div>
       </div>
     </div>
