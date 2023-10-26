@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { MdRefresh } from "react-icons/md"
 import { IWinStatus } from "@/utils/interfaces";
-import { checkWinner } from "@/utils/helpers";
+import { checkWinner, winnerChecker } from "@/utils/helpers";
 import { GiTicTacToe } from "react-icons/gi"
 
 const DEFAULT_GAME_MAP: string[][] = [["U", "U", "U"], ["U", "U", "U"], ["U", "U", "U"]];
@@ -13,27 +13,17 @@ export default function Home() {
 
   useEffect(() => {
     let winnerFound = false;
-  
-    for (let rowIndex = 0; rowIndex < gameMap.length; rowIndex++) {
-      for (let colIndex = 0; colIndex < gameMap[rowIndex].length; colIndex++) {
-        const winner: IWinStatus = checkWinner(gameMap, rowIndex, colIndex);
-        if (winner.isWinning) {
-          console.log(winner.winningSide);
-          winnerFound = true;
-          setAlreadyWin(true);
-          break; // Exit the inner loop
-        }
-      }
-  
-      if (winnerFound) {
-        break; // Exit the outer loop if a winner is found
-      }
+    console.log(winnerChecker(gameMap));
+    const winner: IWinStatus = winnerChecker(gameMap);
+    if (winner.isWinning) {
+      setAlreadyWin(true);
     }
   }, [gameMap]);
 
   const handleReMatch = () => {
     setGameMap(DEFAULT_GAME_MAP);
     setAlreadyWin(false);
+    setTurn(false);
   }
 
   const handleClick = (rowIndex: number, colIndex: number) => {
@@ -52,7 +42,7 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <div className="shadow-2xl shadow-blacks w-[500px] h-[580px]">
+      <div className="shadow-2xl shadow-black w-[500px] h-[580px]">
         <div className=" border-b-2 border-black h-[80px] flex justify-around items-center text-xl">
           <GiTicTacToe className="text-6xl"/>
           Tic Tac Toe
@@ -64,10 +54,13 @@ export default function Home() {
           {gameMap.map((row, rowIndex) => (
             <div className="h-[166px] w-full grid grid-cols-3" key={rowIndex}>
               {row.map((col, colIndex) => (
-                <span onClick={alreadyWin? undefined : ()=>handleClick(rowIndex, colIndex)} className="h-full w-[166px] border-2 flex justify-center items-center" key={colIndex}>{col == "U"? "" : col}</span>
+                <span onClick={alreadyWin? undefined : ()=>handleClick(rowIndex, colIndex)} className="h-full w-[166px] border-2 flex justify-center items-center text-6xl" key={colIndex}>{col == "U"? "" : col}</span>
               ))}
             </div>
           ))}
+        </div>
+        <div className="h-[50px] flex justify-center items-center text-xl w-[500px] border-2 border-black mt-3 bg-white">
+        {alreadyWin? `${turn? "X": "O"} is the winner`: ""}
         </div>
       </div>
     </div>
