@@ -31,6 +31,8 @@ export default function Home() {
     setAlreadyWin(false);
     setTurn(false);
     setIsDrawn(false);
+    setUndoMapState(null);
+    setRedoMapState(null);
   }
 
   const handleClick = (rowIndex: number, colIndex: number) => {
