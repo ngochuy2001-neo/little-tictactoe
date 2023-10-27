@@ -7,7 +7,7 @@ import { BiUndo, BiRedo } from "react-icons/bi"
 
 const DEFAULT_GAME_MAP: string[][] = [["U", "U", "U"], ["U", "U", "U"], ["U", "U", "U"]];
 export default function Home() {
-  
+
   const [gameMap, setGameMap] = useState<string[][]>(DEFAULT_GAME_MAP);
   const [turn, setTurn] = useState<boolean>(false);
   const [alreadyWin, setAlreadyWin] = useState<boolean>(false);
@@ -43,6 +43,7 @@ export default function Home() {
         newState[rowIndex][colIndex] = turn? "O" : "X";
         setTurn(!turn);
         setUndoMapState(prevState);
+        setRedoMapState(null);
         return newState;
       })
     }
